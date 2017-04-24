@@ -8,83 +8,96 @@ namespace Control_Inventario
 {
     class Inventario
     {
-        Producto primero;
-        public Producto raiz;
+        public static int code;
+        public static string name;
+        public static double price;
+        public static int cant;
 
+        private Producto Primero = new Producto(code,name,price,cant);
+
+        /// <summary>
+        /// Crea un inventario con espacio para 20 productos.
+        /// </summary>
         public Inventario()
         {
-            primero = null;
+            Primero = null;
         }
         /// <summary>
-        /// Agrega un producto al invetario
+        /// Agrega un producto al inventario.
         /// </summary>
-        /// <param name="codigo">Un código</param>
-        /// <param name="nombre">Un nombre</param>
-        /// <param name="precio">Un precio</param>
-        /// <param name="cantidad">Una cantidad</param>
-        public void Agregar(int codigo, String nombre, double precio, int cantidad)
+        /// <param name="Product">Un producto.</param>
+        public void Agregar(Producto Product)
         {
-            if (primero == null)
+            if(Primero == null)
             {
-                primero = new Producto(codigo, nombre, precio, cantidad);
-                raiz = primero;
+                Primero = Product;
             }
             else
             {
-                Producto nuevo = new Producto(codigo, nombre, precio, cantidad);
-                primero.setSiguiente(nuevo);
-                primero = nuevo;
+                Producto temp = Primero;
+                while(temp.Siguiente != null)
+                {
+                    temp = temp.Siguiente;
+                }
+                temp.Siguiente = Product;
             }
         }
         /// <summary>
         /// Busca un producto en el inventario a partir de un código dado.
         /// </summary>
-        /// <param name="codigo">Código del producto.</param>
+        /// <param name="Codigo">Código del producto.</param>
         /// <returns></returns>
-        public Producto Buscar(int codigo)
+        public void Buscar(Producto Actual)
         {
-            Producto puntero = raiz;
-
-            while (puntero.Codigo != codigo)
+            Actual = Primero;
+            bool encotrado = false;
+            int codigoEncontrado = 0;
+            if(Primero != null)
             {
-                puntero = puntero._siguiente;
-            }
-            return puntero;
-        }
-
-        public void Eliminar(int codigo)
-        {
-            //Creación de los producto actual y anterior
-            Producto actual, anterior;
-            //Creamos un boleano que nos indique si ya hemos encontrado el producto
-            Boolean encontrado = false;
-            actual = raiz;
-            anterior = null;
-            //Iteración de busqueda
-            while ((actual != null) && (!encontrado))
-            {
-                encontrado = (actual.Codigo == codigo);
-                //Evalua si es verdadero toma el prodcuto actual y el siguiente
-                if (!encontrado)
+                while(Actual != null && encotrado != true)
                 {
-                    anterior = actual;
-                    actual = actual._siguiente;
+                    if(Actual.Codigo == codigoEncontrado)
+                    {
+                        encotrado = true;
+                    }
+                    Actual = Actual.Siguiente;
                 }
-                //Iteración de cambio de enlaces entre productos
-                if (actual != null)
+                if(!encotrado)
                 {
-                    if (actual == raiz)
-                    {
-                        raiz = actual._siguiente;
-                    }
-                    else
-                    {
-                        anterior._siguiente = actual._siguiente;
-                    }
-                    actual = null;
+                    encotrado = false;
                 }
             }
         }
+        /// <summary>
+        /// Elimina el producto del código especificado.
+        /// </summary>
+        /// <param name="Codigo">Código del producto.</param>
+        public void Eliminar(Producto Actual)
+        {
+            
+        }
+        /// <summary>
+        /// Inserta el producto en la pocisión indicada
+        /// </summary>
+        /// <param name="pos">Pocisión del producto</param>
+        /// <param name="producto">Un producto</param>
+        public void Insertar(int pos, Producto producto)
+        {
+            
+        }
+        /// <summary>
+        /// Regresa el producto en el índice indicado.
+        /// </summary>
+        /// <returns>Índice.</returns>
+        //public string Reporte()
+        //{
+        //    //string reporte = "";
+        //    //foreach (Producto Proc in _producto)
+        //    //{
+        //    //    reporte += Proc + "\r\n";
+        //    //}
+        //    //return reporte;
+        //}
     }
 }
 

@@ -13,46 +13,51 @@ namespace Control_Inventario
     public partial class Form1 : Form
     {
         Inventario Invent;
+        Producto Prod;
+        string Nombre;
+        int Precio, Cantidad, Codigo, Numero;
 
         public Form1()
         {
             InitializeComponent();
             Invent = new Inventario();
         }
-
         private void cmdAgregar_Click(object sender, EventArgs e)
         {
-            Invent.Agregar(Convert.ToInt32(this.txtCódigo.Text), this.txtNombre.Text,
-                Convert.ToDouble(this.txtPrecio.Text), Convert.ToInt32(this.txtCantidad.Text));
-
-            //borrar la información de cada TextBox
-            txtCódigo.Text = "";
-            txtNombre.Text = "";
-            txtPrecio.Text = "";
-            txtCantidad.Text = "";
+            //Ingreso de los datos del producto.
+            Nombre = txtNombre.Text;
+            Precio = Convert.ToInt32(txtPrecio.Text);
+            Cantidad = Convert.ToInt32(txtCantidad.Text);
+            Codigo = Convert.ToInt32(txtCódigo.Text);
+            //Se crea el producto nuevo.
+            Prod = new Producto(Codigo, Nombre, Precio, Cantidad);
+            //Agrega el producto al inventario.
+            Invent.Agregar(Prod);
         }
 
         private void cmdEliminar_Click(object sender, EventArgs e)
         {
-            Invent.Eliminar(Convert.ToInt32(txtCódigo.Text));
-            txtCódigo.Text = "";
+            Codigo = Convert.ToInt32(txtCódigo.Text);
+            Invent.Eliminar(Prod);
         }
 
         private void cmdInsertar_Click(object sender, EventArgs e)
         {
+            Producto Nuevo = new Producto(Convert.ToInt32(txtCódigo.Text), txtNombre.Text,
+                Convert.ToInt32(txtPrecio.Text), Convert.ToInt32(txtCantidad.Text));
+            //Invent.Insertar(Convert.ToInt32(txtInsertar.Text), Nuevo);
 
         }
 
         private void cmdBuscar_Click(object sender, EventArgs e)
         {
-            txtReporte.Text = ("Código: " +Convert.ToString(Invent.Buscar(Convert.ToInt32(txtCódigo.Text)).Codigo + "\r\nNombre: " + Invent.Buscar(Convert.ToInt32(txtCódigo.Text)).Nombre
-            + "\r\nPrecio: " + Invent.Buscar(Convert.ToInt32(txtCódigo.Text)).Precio + "\r\nCantidad: " + Invent.Buscar(Convert.ToInt32(txtCódigo.Text)).Cantidad));
-            txtCódigo.Text = "";
+            Codigo = Convert.ToInt32(txtCódigo.Text);
+            Invent.Buscar(Prod);
         }
 
         private void cmdReporte_Click(object sender, EventArgs e)
         {
-            
+            //txtReporte.Text = Invent.Reporte();
         }
     }
 }

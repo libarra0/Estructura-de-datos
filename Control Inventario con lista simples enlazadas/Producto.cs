@@ -8,7 +8,7 @@ namespace Control_Inventario
 {
     class Producto
     {
-        public Producto _siguiente;
+        private Producto _siguiente;
         private int _codigo;
         private string _nombre;
         private double _precio;
@@ -20,7 +20,6 @@ namespace Control_Inventario
             _nombre = name;
             _precio = price;
             _cantidad = cant;
-            _siguiente = null;
         }
 
         /// <summary>
@@ -72,18 +71,17 @@ namespace Control_Inventario
             }
         }
 
-        //Metodos get y set de produvto siguiente
-
-        public Producto getSiguiente()
+        public Producto Siguiente
         {
-            return _siguiente;
+            get
+            {
+                return _siguiente;
+            }
+            set
+            {
+                _siguiente = value;
+            }
         }
-
-        public void setSiguiente(Producto next)
-        {
-            _siguiente = next;
-        }
-
         /// <summary>
         /// Muestra información del producto
         /// </summary>
