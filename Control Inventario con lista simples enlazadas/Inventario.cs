@@ -8,12 +8,7 @@ namespace Control_Inventario
 {
     class Inventario
     {
-        public static int code;
-        public static string name;
-        public static double price;
-        public static int cant;
-
-        private Producto Primero = new Producto(code,name,price,cant);
+        private Producto Primero;
 
         /// <summary>
         /// Crea un inventario con espacio para 20 productos.
@@ -26,55 +21,97 @@ namespace Control_Inventario
         /// Agrega un producto al inventario.
         /// </summary>
         /// <param name="Product">Un producto.</param>
-        public void Agregar(Producto Product)
+        //public void Agregar(Producto Product)
+        //{
+        //    if(Primero == null)
+        //    {
+        //        Primero = Product;
+        //    }
+        //    else
+        //    {
+        //        Producto temp = Primero;
+        //        while(temp.Siguiente != null)
+        //        {
+        //            temp = temp.Siguiente;
+        //        }
+        //        temp.Siguiente = Product;
+        //    }
+        //}
+        public void Agregar(Producto nuevo)
         {
-            if(Primero == null)
+            if(Primero==null)
             {
-                Primero = Product;
+                Primero = nuevo;
             }
             else
             {
-                Producto temp = Primero;
-                while(temp.Siguiente != null)
-                {
-                    temp = temp.Siguiente;
-                }
-                temp.Siguiente = Product;
+                Agregar(nuevo, Primero);
             }
+        }
+
+        private void Agregar(Producto nuevo, Producto ultimo)
+        {
+            if(ultimo.Siguiente == null)
+            {
+                ultimo.Siguiente = nuevo;
+            }
+            else
+            {
+                Agregar(nuevo, ultimo.Siguiente);
+            }
+        }
+        /// <summary>
+        /// Agrega al inicio de la lista un producto
+        /// </summary>
+        /// <param name="Product">Un producto</param>
+        public void AgregarAlInicio(Producto Product)
+        {
+            Product.Siguiente = Primero;
+            Primero = Product;
         }
         /// <summary>
         /// Busca un producto en el inventario a partir de un código dado.
         /// </summary>
         /// <param name="Codigo">Código del producto.</param>
         /// <returns></returns>
-        public void Buscar(Producto Actual)
+        public Producto Buscar(int ID)
         {
-            Actual = Primero;
-            bool encotrado = false;
-            int codigoEncontrado = 0;
-            if(Primero != null)
+            Producto temp = Primero;
+            while(temp.Siguiente !=null && ID != temp.Codigo)
             {
-                while(Actual != null && encotrado != true)
-                {
-                    if(Actual.Codigo == codigoEncontrado)
-                    {
-                        encotrado = true;
-                    }
-                    Actual = Actual.Siguiente;
-                }
-                if(!encotrado)
-                {
-                    encotrado = false;
-                }
+                temp = temp.Siguiente;
+            }
+            if(temp.Codigo == ID)
+            {
+                return temp;
+            }
+            else
+            {
+                return null;
             }
         }
         /// <summary>
         /// Elimina el producto del código especificado.
         /// </summary>
         /// <param name="Codigo">Código del producto.</param>
-        public void Eliminar(Producto Actual)
+        public void Eliminar(int ID)
         {
-            
+            Producto temp = Primero;
+            if(Primero.Codigo == ID)
+            {
+                Primero = Primero.Siguiente;
+            }
+            else
+            {
+                while(temp.Siguiente != null && ID != temp.Siguiente.Codigo)
+                {
+                    temp = temp.Siguiente;
+                }
+                if(temp.Siguiente != null)
+                {
+                    temp.Siguiente = temp.Siguiente.Siguiente;
+                }
+            }
         }
         /// <summary>
         /// Inserta el producto en la pocisión indicada
@@ -89,15 +126,44 @@ namespace Control_Inventario
         /// Regresa el producto en el índice indicado.
         /// </summary>
         /// <returns>Índice.</returns>
-        //public string Reporte()
-        //{
-        //    //string reporte = "";
-        //    //foreach (Producto Proc in _producto)
-        //    //{
-        //    //    reporte += Proc + "\r\n";
-        //    //}
-        //    //return reporte;
-        //}
+        public string Reporte()
+        {
+            string reporte = "";
+            Producto t = Primero;
+            while(t!=null)
+            {
+                reporte += t.ToString() + "\r\n";
+                t = t.Siguiente;
+            }
+            return reporte;
+        }
+        /// <summary>
+        /// Regresa el reporte invertido de la lista
+        /// </summary>
+        /// <returns>Índice invertido</returns>
+        public string ReporteInverso()
+        {
+            if(Primero != null)
+            {
+                return ReporteInverso(Primero);
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        private string ReporteInverso(Producto nodo)
+        {
+            if(nodo.Siguiente == null)
+            {
+                return nodo.ToString() + "\r\n";
+            }
+            else
+            {
+                return ReporteInverso(nodo.Siguiente) + nodo.ToString() + "\r\n";
+            }
+        }
     }
 }
 

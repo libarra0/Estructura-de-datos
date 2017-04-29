@@ -15,7 +15,7 @@ namespace Control_Inventario
         Inventario Invent;
         Producto Prod;
         string Nombre;
-        int Precio, Cantidad, Codigo, Numero;
+        int Precio, Cantidad, Codigo;
 
         public Form1()
         {
@@ -35,10 +35,23 @@ namespace Control_Inventario
             Invent.Agregar(Prod);
         }
 
+        private void cmdAgregarAlInicio_Click(object sender, EventArgs e)
+        {
+            //Ingreso de los datos del producto.
+            Nombre = txtNombre.Text;
+            Precio = Convert.ToInt32(txtPrecio.Text);
+            Cantidad = Convert.ToInt32(txtCantidad.Text);
+            Codigo = Convert.ToInt32(txtCódigo.Text);
+            //Se crea el producto nuevo.
+            Prod = new Producto(Codigo, Nombre, Precio, Cantidad);
+            //Agrega el producto al inventario.
+            Invent.AgregarAlInicio(Prod);
+        }
+
         private void cmdEliminar_Click(object sender, EventArgs e)
         {
             Codigo = Convert.ToInt32(txtCódigo.Text);
-            Invent.Eliminar(Prod);
+            Invent.Eliminar(Codigo);
         }
 
         private void cmdInsertar_Click(object sender, EventArgs e)
@@ -52,12 +65,17 @@ namespace Control_Inventario
         private void cmdBuscar_Click(object sender, EventArgs e)
         {
             Codigo = Convert.ToInt32(txtCódigo.Text);
-            Invent.Buscar(Prod);
+            txtReporte.Text = Invent.Buscar(Codigo).ToString();
         }
 
         private void cmdReporte_Click(object sender, EventArgs e)
         {
-            //txtReporte.Text = Invent.Reporte();
+            txtReporte.Text = Invent.Reporte();
+        }
+
+        private void cmdInverso_Click(object sender, EventArgs e)
+        {
+            txtReporte.Text = Invent.ReporteInverso();
         }
     }
 }
