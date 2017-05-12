@@ -12,19 +12,59 @@ namespace Listas_Circulares
 {
     public partial class Form1 : Form
     {
-        Base B1, B2, B3;
-        Ruta R1 = new Ruta();
+        Base B1;
+        Ruta R1;
+        string Parada;
+        int Tiempo;
 
         public Form1()
         {
             InitializeComponent();
-            B1 = new Base("A", 05);
-            B2 = new Base("B", 10);
-            B3 = new Base("C", 15);
+        }
+
+
+        private void cmdAgregar_Click(object sender, EventArgs e)
+        {
+            Parada = txtParada.Text;
+            Tiempo = Convert.ToInt32(txtHorario.Text);
+            B1 = new Base(Parada, Tiempo);
             R1.Agregar(B1);
-            R1.Agregar(B2);
-            R1.Agregar(B3);
-            R1.Insertar(0, B3);
+        }
+
+        private void cmdBuscar_Click(object sender, EventArgs e)
+        {
+            Parada = txtParada.Text;
+            R1.Buscar(Parada);
+        }
+
+        private void cmdEliminar_Click(object sender, EventArgs e)
+        {
+            Parada = txtParada.Text;
+            R1.Eliminar(Parada);
+        }
+
+        private void cmdAgregarInicio_Click(object sender, EventArgs e)
+        {
+            Parada = txtParada.Text;
+            Tiempo = Convert.ToInt32(txtHorario.Text);
+            B1 = new Base(Parada, Tiempo);
+            R1.AgregarAlInicio(B1);
+        }
+
+        private void cmdEliminarInicio_Click(object sender, EventArgs e)
+        {
+            R1.EliminarInicio();
+        }
+
+        private void cmdInsertar_Click(object sender, EventArgs e)
+        {
+            Base NuevaBase = new Base(txtReporte.Text, Convert.ToInt32(txtHorario.Text));
+            R1.Insertar(Convert.ToInt32(txtNuevaBase.Text), NuevaBase);
+        }
+
+        private void cmdReporte_Click(object sender, EventArgs e)
+        {
+            txtReporte.Text = R1.Reporte();
         }
     }
 }

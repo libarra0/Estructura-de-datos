@@ -65,7 +65,7 @@ namespace Listas_Circulares
 
         public override string ToString()
         {
-            return "Base: " + _nombre + " Hora de llegada: " + _minutos;
+            return "Parada: " + _nombre + " Hora de llegada: " + _minutos;
         }
     }
 }
