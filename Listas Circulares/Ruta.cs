@@ -24,6 +24,7 @@ namespace Listas_Circulares
             {
                 Primero = nueva;
                 Primero.Siguiente = nueva;
+                Primero.Anterior = nueva;
             }
             else
             {
@@ -50,6 +51,7 @@ namespace Listas_Circulares
         public void AgregarAlInicio(Base nueva)
         {
             nueva.Siguiente = Primero;
+            Primero.Anterior = nueva;
             Primero = nueva;
         }
         /// <summary>
@@ -84,16 +86,19 @@ namespace Listas_Circulares
             if (Primero.Nombre == name)
             {
                 Primero = Primero.Siguiente;
+                Primero.Anterior = Primero;
             }
             else
             {
                 while (temp.Siguiente != null && name != temp.Siguiente.Nombre)
                 {
                     temp = temp.Siguiente;
+                    temp.Anterior = temp;
                 }
                 if (temp.Siguiente != null)
                 {
                     temp.Siguiente = temp.Siguiente.Siguiente;
+                    temp.Siguiente.Siguiente = temp.Anterior;
                 }
             }
         }
