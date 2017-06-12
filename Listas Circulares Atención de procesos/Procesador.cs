@@ -9,6 +9,7 @@ namespace ColasFIFO
     class Procesador
     {
         private Proceso _principio;
+        private Proceso _ultimo;
         private int noProcesos = 0;
         /// <summary>
         /// Agrega el siguiente dato en la cola
@@ -19,12 +20,14 @@ namespace ColasFIFO
             if(_principio == null)
             {
                 _principio = fase;
+                _ultimo.Siguiente = _ultimo;
                 noProcesos++;
             }
             else
             {
                 fase.Siguiente = _principio;
                 _principio = fase;
+                _ultimo = _ultimo.Siguiente;
                 noProcesos++;
             }
         }
@@ -42,6 +45,7 @@ namespace ColasFIFO
                 {
                     aux = _principio;
                     _principio = null;
+                    _ultimo = _ultimo.Siguiente;
                     noProcesos--;
 
                     return aux;

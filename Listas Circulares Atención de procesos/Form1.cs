@@ -41,13 +41,14 @@ namespace ColasFIFO
                 {
                     cev++;
                 }
-                else if(miProceso.Dato == 0)
-                {
-                    mififo.sacar();
-                }
+                
                 else
                 {
                     miProceso.Dato--;
+                    if (miProceso.Dato == 0)
+                    {
+                        mififo.sacar();
+                    }
                 }
             }
 
